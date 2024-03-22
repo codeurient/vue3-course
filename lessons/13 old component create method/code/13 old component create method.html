@@ -1,0 +1,51 @@
+
+<!-- 
+
+
+  import { createApp } from 'vue'
+/***
+ *
+ * Indi ise component yaradiriq. Component veb sehifenin ayri-ayri hisseleridir.
+ * Bir veb sehifesi ferqli komponentlerin birlesmelerinden emele gelir.
+ * Vue js-in  de esas mahiyyeti ele bu component-lerdir.
+ *
+ * Meselen: web saytimiz deyek ki, header, footer, yaxud form, yaxud pop up pencere kimi componentlerden ibaretdir.
+ * Bu componentler ayri-ayri yaradilir ve veb saytin ferqli sehifelerine lazim olduqlarinda cagrilaraq istifade edilir.
+ *
+ * Componentler adi JS obyektleri kimi yaradilir. Bezekli moterize ile {}. Ancaq bu kohne ve rahat olmayan qaydadir.
+ * Asagida hemin kohne qaydaya uygun bir misal verilibdir.
+ *
+ * Ancaq yeni qayda SLC qaydasidir. Single File Component. Yeni ayrica bir VUE fayli yaradiriq ve komponentleri hemin fayllarda
+ * yaziriq.
+ *
+***/
+// Bu cur yaratdiqdan sonra ardi da var ancaq ele bu gorduyumuz basimizin qarismasi ucun kifayetdir. Onun ucun unudun bunu.
+const App = {
+    data() {
+        return { message: 'Salam Vue!' }
+    },
+    methods: {
+        showMessage() {
+            alert(this.message);
+        }
+    },
+    template: `
+        <div>
+            <p>{{ message }}</p>
+            <button @click="showMessage">Mesajı Göster</button>
+        </div>
+    `,
+    style: `
+        p { color: blue; }
+    `
+}
+
+createApp(App).mount('#app')
+
+
+
+
+
+
+
+-->

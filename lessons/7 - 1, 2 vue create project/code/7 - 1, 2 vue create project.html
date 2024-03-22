@@ -1,0 +1,43 @@
+    <!-- 
+
+        1. vue js-i yukledikden sonra bu komanda ile proyekti yaradiriq:   sudo vue create vue3-course
+
+       
+
+        2. sudo: vue: command not found   
+        Eger bele bir xeta gorseniz onda macbook emeliyyat sistemleri ucun PATH deyiskenine vue js-in yuklu
+        oldugu yolu elave etmek lazimdir menasina gele biler. Niye gore deqiq elave etmek lazimdir demirik ? 
+        Cunki problem berkide basqa sebebe goredir. Bele problemler hemise ferqli sebeblere gore qaynaqlanir.
+
+
+
+        3. VUE js-in yuklu oldugu yolu oyrenmek ucun ilk once bu komandani daxil edirik:   sudo npm list -g @vue/cli
+
+        Necite asagidaki kimi olacaqdir: 
+        /Users/codeurient/npm/bin
+            └── @vue/cli@5.0.8
+
+        Demeli bizim yolumuz bu sekildedir:    /Users/codeurient/npm/bin
+
+        Bu kamanda bezen 'lib' bezen 'bin' kimi vere biler sonuncu qovluq adini. Bezende hec vermir. Bunun ucun en yaxsi variant manual sekilde 
+        yoxlamaqdir hemin vue install dedikde vue js-in yuklendiyi yolu. Sekilde gosterecem ancaq emeliyyat sisteminden asili olaraq 
+        ferqlilik gosterme ehtimalinin oldugunuda unutmayaq.
+
+
+
+        4. Bu yolu PATH-lere elave etmek ucun asagidaki 3 qovluqdan birine (hamisinada olar) daxil olmaliyiq. 
+           I) sudo nano ~/.bashrc          II) sudo nano ~/.bash_profile         III) sudo nano ~/.zshrc 
+
+        Hemin qovluqlara daxil olmaq ucun terminalda bele yaziriq (mende zshrc qovlugudur ancaq sizde digerleri ola biler): 
+        a) cd ~                     - en geriye cixmaq ucun.
+        b) ls -a                    - butun qovluqlari gormek ucun
+        c) sudo nano ~/.zshrc       - bu qovluga daxil olaraq 3 nomrede elde etdiyimiz yolu en sona elave edirik:
+                                      export PATH=$PATH:/Users/codeurient/npm/bin
+        d) Ctrl+X  ->  Y -> Enter   duymelerini sirasi ile basasraq yaddasa yaziriq deyisikliyi.
+        e) nano source ~/.zshrc     - qovlugu yenileyirik
+        f) sudo vue --version       - terminali qapadib yeniden acdiqdan sonra bu kamandani yazaraq vue js-in isleyib islemediyini yoxlayiriq.
+
+
+
+
+     -->

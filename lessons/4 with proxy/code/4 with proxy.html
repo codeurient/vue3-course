@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. target adinda Obyekt yaradiriq.
+        let hedef = {
+            message: "Salam!"
+        };
+
+        // 2. handler adinda Obyekt yaradiriq. Bu obyekt get ve set metodlarindan ibaretdir.
+        let handler = {
+            // 3. get metodunun UC parametri vardir. Bu metodu cagirmaga ehtiyac yoxdur cunki o, avtomatik olaraq cagrilir ve lazim olan arqumetleri qebul edir.
+            // a) target - bu parametr en yuxarida bizim yaratdigimiz hedef obyektidir
+            // b) prop - bu parametr hedef obyektimizin xassesidir: yeni, message
+            get: function(target, prop) {
+                // Obyektlerin deyerlerini ekrana yazdirmaq ucun [] simvolu ile muraciet edirik ve xassenin adini yaziriq.
+                // get() metodu hal-hazirda sadece bir is gorur. Deyeri elde edir.
+                return target[prop];    
+            },
+
+            // 4. set metodunun DORD parametri vardir. Bu metodu cagirmaga ehtiyac yoxdur cunki o, avtomatik olaraq cagrilir ve lazim olan arqumetleri qebul edir.
+            set: function(target, prop, value) {
+                // set() metodu da hal-hazirda bir is gorur. Yeni deyer elave edir.
+                target[prop] = value;
+                return true;
+            }
+
+        };
+
+        // 5. Proxy obyektini cagirirq ve yuxarida yaratdigimiz 2 obyekti arqument kimi gonderirik.
+        let proxy = new Proxy(hedef, handler);
+        // 6. Deyeri deyismek istedikde proxy deyiskenine muraciet ederek message xassesini cagirmaq ve ona yeni deyeri vermek kifayetdir.
+        // proxy.message = "Sagol";
+        console.log(proxy.message); 
+    </script>
+</body>
+</html>
