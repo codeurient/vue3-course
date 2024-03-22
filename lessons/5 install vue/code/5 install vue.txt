@@ -1,0 +1,4 @@
+
+
+1. Saytxa daxil oluruq ve CLI sistemi vasitesi ile VUE js-i qurasdiririq: https://cli.vuejs.org/ru/
+2. Terminal pencerede bu kamandani daxil edirik: npm install -g @vue/cli

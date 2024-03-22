@@ -1,0 +1,1 @@
+1. Eger bele bir xeta alsaniz onda terminalda mac emeliyyat sistemleri ucun SUDO yazmaq lazimdir kamandanin onune
