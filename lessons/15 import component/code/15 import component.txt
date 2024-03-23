@@ -1,0 +1,7 @@
+ * Numune.vue faylinin icinde olan componentleri 'buBirTestdir' adli variable (deyisken)
+ * icine gonderirik. 
+ * 
+ * create() metodu ile buBirTestdir adinda Vue js proqrami yaradilir.
+ * 
+ * mount() metodu ise hemin yaradilan proqrami public qovlugundaki index.html
+ * faylinin icine inteqrasiya edir. Yeni yerlesdirir.

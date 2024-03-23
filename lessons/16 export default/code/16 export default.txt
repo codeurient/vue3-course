@@ -1,0 +1,20 @@
+
+/***
+ * 
+ * Bu sahədə Vue komponentlerinin məntiqi və funksionallığı ilə bağlı istənilən 
+ * JavaScript kodu ola bilər.
+ * 
+ * Bu bolmede default olaraq obyekt { } export edilir.
+ * 
+ * Export o demekdir ki, bu script icinde yazilan kodlar basqa bir yere gonderilsin.
+ * Basqa yer dedikde nezerde tutulan meselen, script tag-leri icinden, template tag-leri
+ * icine.
+ * 
+ * default - Sadece default yazdigimiz ucun hemin kodlari cari fayl icinde istifade
+ * ede bilirik. Eger bu kodlari basqa fayl icinde istifade etmek isteyirikse onda ad
+ * vermek lazimdir. Meselen. export default gonderilenKomponent
+ * 
+ * Ad verdikden sonra hemin export edilen kodlari bu ad ile basqa fayl icine import 
+ * ede bilerik.
+ * 
+***/
