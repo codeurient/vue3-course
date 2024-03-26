@@ -1,0 +1,60 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="birinciProqram">   <xosgelmisiniz :name="ad1" :age="yash1"></xosgelmisiniz>   </div>
+        <div id="ikinciProqram">    <xosgelmisiniz :name="ad2" :age="yash2"></xosgelmisiniz>   </div>
+
+        <template id="xosgelmisiniz-template">     <p>Salam, men birden cox istifade edile bilen komponentem. Mənim adim: {{ name }}. Menim yasim: {{ age }}</p>     </template>
+
+        <script>
+            // 1) VUE global deyiskendir ve be deyiskenin icinde birden cox ferqli funksiyalar movcuddur. createApp, ref, reactive ve.s kimi. CONST acar sozu ile 2 eded local deyisken yaradiriq ve hemin VUE metodlarini bu 
+            //    deyiskenlere veririk. Mentiqle eslinde bir createApp adinda funksiya yaradibdilar ve bu funksiyanin icinde emrleri icra eden basqa funksiyalar yazibdilar. Bizde bu funksiyani createApp-e veririk.
+            const { createApp, ref } = Vue
+            // 2) DATA xususiyyeti komponentler icinde istifade edilecek deyerleri saxlayan obyekti qaytarir.      VUE 2 de istifade edilir. VUE 3 ucunde kecerlidir.
+            //    REF xususiyyeti dəyərlərə tek-tek reaktiv link teyin eden funksiyadır.                           VUE 3 de istifade edilir.
+
+            // Eger her ikisi ile de eyni isleri gormek mumkundurse onda REF ile DATA arasinda ferq nededir ?
+            // REF istifadə etdikde Vue.js bütün obyektin yox, yalnız həmin qeyd edilmis xüsusi dəyərin uzerinde deyisiklik edir. Buda performansa tesir eden amildir.
+            // DATA istifadə edərkən Vue.js bu funksiyanin qaytardigi bütün dəyərləri izləyir və onlardan hər hansı biri dəyişdikdə bütün komponenti yenidən cagirir.
+            const ad1   = ref('Joe');
+            const yash1 = ref(21);
+
+            createApp({
+                setup() {
+                    return { ad1, yash1 };
+                },
+                components: {
+                    'xosgelmisiniz': {
+                        props: ['name', 'age'],
+                        template: '#xosgelmisiniz-template'
+                    }
+                }
+            }).mount('#birinciProqram');
+    // ****************************************************************************************************************************************************
+            const ad2 = ref('Bob');
+            const yash2 = ref(22);
+
+            createApp({
+                setup() {
+                    return { ad2, yash2 };
+                },
+                components: {
+                    'xosgelmisiniz': {
+                        props: ['name', 'age'],
+                        template: '#xosgelmisiniz-template'
+                    }
+                }
+            }).mount('#ikinciProqram');
+        </script>
+    </body>
+    </html>
+
+
+
+
+
+
+

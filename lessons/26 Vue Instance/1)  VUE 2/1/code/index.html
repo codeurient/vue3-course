@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>  </head>
+<body>
+    <div id="birinciProqram">
+        <h3>Birinci</h3>
+        <xosgelmisiniz></xosgelmisiniz>
+    </div>
+
+    <div id="ikinciProqram">
+        <h3>Ikinci</h3>
+        <xosgelmisiniz></xosgelmisiniz>
+    </div>
+
+    <script>
+           /* 
+            * 1) new Vue({...}) - Bu konstruktor HTML ile VUE js kodlarini birlesdirmek, aralarinda elaqe qurmaq ucun istifade edilen VUE OBYEKTIDIR (VUE INSTANCE).
+            *   {el: ''}        - Bu konfiqurasiya obyektidir ve Vue Obyektinin HTML sənədində hansı elementə bağlanmalı olduğunu müəyyən edir.
+            *                   - 'el' sozu ELEMENT sozunun qisaldilmasidir. Element dedikde HTML tag-i nezerde tutulur. Elaqe ID vasitesi ile heyata kecirilir. 
+            * 
+            * 2) VUE js-de, birden cox element ucun 1 dene VUE OBYEKT-i yaratmaq olmur. Her element ucun ayri-ayri  VUE OBYEKT-i yaradilmalidir.
+            * 
+            * 3) Ders 25-de, komponentleri vue.component() icinde ayrica yazmisdiq. O, bir istifade qaydasi idi. Ikinci istifade qaydasi ise hal-hazirda asagida gorduyunuzdur.
+            * VUE OBYEKT-i icinde 'components' adinda bir obyekt yaradaraq eyni neticeni elde ede bilirik. 
+            */
+        new Vue({
+            el: '#birinciProqram',
+            components: {
+                'xosgelmisiniz': {
+                    template: '<p> Salam, men birden cox istifade edile bilen komponentem</p>'
+                }
+            }
+        });
+
+        new Vue({
+            el: '#ikinciProqram',
+            components: {
+                'xosgelmisiniz': {
+                    template: '<p> Salam, men birden cox istifade edile bilen komponentem</p>'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

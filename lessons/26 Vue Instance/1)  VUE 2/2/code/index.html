@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+<body>
+    <div id="birinciProqram">   <xosgelmisiniz :name="ad" :age="yash"></xosgelmisiniz>   </div>
+    <div id="ikinciProqram">    <xosgelmisiniz :name="ad" :age="yash"></xosgelmisiniz>   </div>
+
+    <template id="xosgelmisiniz-template">     <p>Salam, men birden cox istifade edile bilen komponentem. Mənim adim: {{ name }}. Menim yasim: {{ age }}</p>     </template>
+
+    <script>
+        // 'TAG' adlarini, onlara vere bileceyimiz 'STYLE' atributu ve.s kimi elementleri 'TEMPLATE:' xassesinin önündə yazmaq cetin oldugundan hemin elementleri HTML-de daha rahat
+        //  yaza bilek deye 'TEMPLATE' xassesi adinda COMPONENT yaradirirq: <TEMPLATE></TEMPLATE>.  TEMPLATE xassesini TEMPLATE component-i ile elaqelendirmek ucun ise IDENTIFIKATOR 
+        //  adindan istifade etmeliyik. Bu component-ler tag adlarina benzeyir.
+        new Vue({
+            el: '#birinciProqram',
+            data() {
+                return { ad: 'Joe', yash: 21 }
+            },
+            components: {
+                'xosgelmisiniz': {
+                    props: ['name', 'age'],
+                    template: '#xosgelmisiniz-template'
+                }
+            }
+        });
+        // 'TEMPLATE' komponenti birdene oldugundan DATA funksiyasi ile ferqli deyerler teyin etmek istedikde PROPS xassesin-den istifade ede bilerik.
+        new Vue({
+            el: '#ikinciProqram',
+            data() {
+                return { ad: "Bob", yash: 22 }
+            },
+            components: {
+                'xosgelmisiniz': {
+                    props: ['name', 'age'],
+                    template: '#xosgelmisiniz-template'
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

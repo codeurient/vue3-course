@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="birinciProqram">   <xosgelmisiniz :name="ad" :age="yash"></xosgelmisiniz>   </div>
+    <div id="ikinciProqram">    <xosgelmisiniz :name="ad" :age="yash"></xosgelmisiniz>   </div>
+
+    <template id="xosgelmisiniz-template">     <p>Salam, men birden cox istifade edile bilen komponentem. Mənim adim: {{ name }}. Menim yasim: {{ age }}</p>     </template>
+
+    <script>
+
+        const app1 = Vue.createApp({
+            data() {
+                return { ad: 'Joe', yash: 21 }
+            },
+            components: {
+                'xosgelmisiniz': {
+                    props: ['name', 'age'],
+                    template: '#xosgelmisiniz-template'
+                }
+            }
+        });
+
+        const app2 = Vue.createApp({
+            data() {
+                return { ad: "Bob", yash: 22 }
+            },
+            components: {
+                'xosgelmisiniz': {
+                    props: ['name', 'age'],
+                    template: '#xosgelmisiniz-template'
+                }
+            }
+        });
+
+        app1.mount('#birinciProqram');
+        app2.mount('#ikinciProqram');
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- CDN linki saytdan elde ede bilersiz. https://v2.vuejs.org/ -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        Bu qayda VUE js 2 versiyasina aiddir. Ancaq tez-tez qarsimiza cixdigi ucun bilmekde meslehet var.
+        Men elave js fayli yaratmadan her seyi bir html fayli icinde yazacam. Vue kodlarinida script tag-leri icinde yerlesdirecem.
+     -->
+    <div id="birinciProqram">
+        <h3>Birinci</h3>
+        <xosgelmisiniz></xosgelmisiniz>
+    </div>
+
+    <div id="ikinciProqram">
+        <h3>Ikinci</h3>
+        <xosgelmisiniz></xosgelmisiniz>
+    </div>
+
+    <script>
+        // 1) Bu metodun 1ci parametri TAG adi kimi istifade edeceyimiz component adidir. 2ci parametr olan 'template' ise VUE js bu 
+        // komponenti render etdikde hemin komponenti evez edecek olan html tagidir. 
+        // 2) component adi (xosgelmisiniz) eger kicik herfler ile yazilarsa onda hemin ad HTML-de kicik ve bitisik yazilmalidir.
+        //    component adi (xosGelmisiniz) eger kicik ve boyuk herf ile yazilarsa onda hemin ad HTML-de defis ile yazilmalidir. <xos-gelmisiniz></xos-gelmisiniz>
+        Vue.component('xosgelmisiniz', {
+            template: '<p> Salam, men birden cox istifade edile bilen komponentem</p>'
+        });
+
+        // 3) new Vue({...}) - Bu konstruktor HTML ile VUE js kodlarini birlesdirmek, aralarinda elaqe qurmaq ucun istifade edilen VUE OBYEKTIDIR (VUE INSTANCE).
+        //    {el: ''}       - Bu konfiqurasiya obyektidir ve Vue Obyektinin HTML sənədində hansı elementə bağlanmalı olduğunu müəyyən edir.
+        //                     'el' sozu ELEMENT sozunun qisaldilmasidir. Element dedikde HTML tag-i nezerde tutulur. Elaqe ID vasitesi ile heyata kecirilir. 
+        new Vue({ 
+            el: '#birinciProqram' 
+        });
+
+        new Vue({ 
+            el: '#ikinciProqram' 
+        });
+    </script>
+</body>
+</html>
+
+
+

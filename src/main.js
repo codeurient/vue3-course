@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import buBirTestdir from './components/AnaKomponent.vue'
+import buBirTestdir from './Numune.vue'
 
 
 

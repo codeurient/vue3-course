@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+</head>
+<body>
+   
+    <div id="qisa-numune">
+        <sayma-duymesi></sayma-duymesi>
+    </div>
+
+    <script>
+        Vue.component('sayma-duymesi', {
+            // data funksiyasi Component-in xassesidir hansi ki, component icinde istifade edilecek melumatlari qaytarir.
+            // data funksiyasini daya qisa bele yaza bilerik:   data() {}
+            data: function () {
+                return {
+                    say: 0
+                }
+            },
+            // Teze versiyalarda v-on evezine qisa formada sadece :click yazaraq EVENT yaratmaq mumkundur.
+            // Ancaq VUE2-de v-on sufiksinden istifade etmeliyik.
+            template: '<button v-on:click="say++">    Sen duymeni {{ say }} defe basdin.    </button>'
+        })
+
+        new Vue({ el: '#qisa-numune' })
+
+    </script>
+</body>
+</html>
+
+
+

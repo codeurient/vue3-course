@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>    </head>
+<body>
+    <div id="birinciProqram">
+        <h3>Birinci</h3>
+        <xosgelmisiniz></xosgelmisiniz>
+    </div>
+
+    <div id="ikinciProqram">
+        <h3>Ikinci</h3>
+        <xosgelmisiniz></xosgelmisiniz>
+    </div>
+
+    <script>
+           /* 
+            * 
+            * 1) const app = Vue.createApp({ ... }) qaydasina APP INSTANCE qaydasi deyilir ve bu qayda VUE 3-de istifade edilen qaydadir.
+            * 
+            */
+        const app1 = Vue.createApp({
+            components: {
+                'xosgelmisiniz': {
+                    template: '<p> Salam, men birden cox istifade edile bilen komponentem</p>'
+                }
+            }
+        });
+
+        const app2 = Vue.createApp({
+            components: {
+                'xosgelmisiniz': {
+                    template: '<p> Salam, men birden cox istifade edile bilen komponentem</p>'
+                }
+            }
+        });
+
+        // APP INSTANCE ile yaratdigimiz obyekti müvafiq elementlərə bağlamaq üçün mount() metodundan istifadə edirik. VUE 2 de ise 'EL' xassesinden istifade etmisdik.
+        app1.mount('#birinciProqram');
+        app2.mount('#ikinciProqram');
+
+        
+    </script>
+</body>
+</html>

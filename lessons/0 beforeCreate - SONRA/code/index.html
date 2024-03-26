@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue 3 Example</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  
+  <div id="app">
+    <div v-if="isLoading">Loading...</div>
+    <ul v-else>
+      <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+    </ul>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      beforeCreate() {
+        // Загрузка конфигурации перед созданием компонента
+        fetch('/api/config')
+          .then(response => response.json())
+          .then(config => {
+            // Установка конфигурации в глобальные переменные или хранилище,
+            // доступные для использования в других частях приложения
+            this.config = config;
+          })
+          .catch(error => {
+            console.error('Failed to load configuration:', error);
+          });
+      },
+      created() {
+        console.log('created hook executed');
+        this.fetchData(); // Вызываем метод для загрузки данных после создания компонента
+      },
+      setup() {
+        const isLoading = ref(true);
+        const items = ref([]);
+
+        const fetchData = () => {
+          // Предположим, что это асинхронный запрос к серверу
+          setTimeout(() => {
+            isLoading.value = false;
+            items.value = [
+              { id: 1, name: 'Item 1' },
+              { id: 2, name: 'Item 2' },
+              { id: 3, name: 'Item 3' }
+            ];
+          }, 1000);
+        };
+
+        return {
+          isLoading,
+          items,
+          fetchData
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
