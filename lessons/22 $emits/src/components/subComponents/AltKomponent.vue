@@ -5,9 +5,9 @@
         <p>Sayi 2: {{ sayi2 }}</p>
     </div>
 
-    <!-- 1. duymeni basdiqda 'anaKomponenteGonder' adli netodumuz isleyecekdir. -->
+    <!-- 1. duymeni basdiqda 'anaKomponenteGonder' adli metodumuz isleyecekdir. -->
     <button @click="anaKomponenteGonder">
-        Elde etdiyimiz ededleri cemle ve ust komponende geri gonder
+        Elde etdiyimiz ededleri cemle ve ust komponente geri gonder
     </button>
 </template>
 
