@@ -1,27 +1,28 @@
+<!-- 
+    Bizim kodumuzda 2 ferqli komponent movcuddur hansi ki, onlar 35-ci derse qeder birlikde istifade olunublar. 
+    Vue js-in mentiqi ise her komponenti ayri-ayri fayllara bolmek ve ferqli sehifelerde yeniden cagiraraq istifade etmekdir.
+
+    1ci komponent postlarin elave edilmesi ucun olan FORM. 
+
+    2ci komponent elave edilen postlarin ozleri. 
+
+    Bu komponentleri ayirmaq ucun 'SRC' qovlugu icinde 'COMPONENTS' adinda qovluq yaradiriq. Hemin qovlugun icinde ise 2 dene fayl: PostForm.vue, PostList.vue.
+ -->
 <template>
     <div class="app">
-        <!-- 
-            Her yeni post elave etmek ucun BUTTON duymesini basdiqda deyerler submit oldugu ucun sehifede yenilenme bas verir. Buna gorede gonderdiyimiz deyerler yoxa cixir. Bu brauserin standart ozunu 
-            aparma seklidir. Brovserin bu ozelliyini qapatmaq ucun, preventDefault funksiyasini cagirmaq lazimdir. 
-            
-            Vue js-de hemin funksiyani istifade etmek ucun @SUBMIT event-ina PREVENT modifikatorunu elave edirik.   Modifikatorlar DOM EVENT-larinin davranışlarini dəyişdirmək üçün istifadə olunur.
-            Meselen: click, keyup, submit ve.s bunlar DOM EVENT-laridir. PREVENT, ENTER ve.s ise event modifikatorlaridir. 
-        -->
-        <form @submit.prevent>
-            <h4>Creating post</h4>
-            <input :value="title" class="input" type="text" placeholder="Title of post" @input="title = $event.target.value">
-            <input :value="body" class="input" type="text" placeholder="Body of post" @input="body = $event.target.value">
-            <button class="btn" @click="createPost">Create post</button>
-        </form>
-
-        <div class="post" v-for="post in posts">
-            <div><strong>Title: </strong>{{ post.title }}</div>
-            <div><strong>Body: </strong>{{ post.body }}</div>
-        </div>
+        <post-form @create="createPost"/>
+        <post-list :posts="posts" />
     </div>
 </template>
 <script>
+import PostForm from "./components/PostForm.vue";
+import PostList from "@/components/PostList.vue";
+
 export default {
+    components: {
+        PostForm, PostList
+    },
+
     data() {
         return {
             posts: [
@@ -29,24 +30,11 @@ export default {
                 { id: 2,    title: 'Python ',       body: 'Python is a high-level, general-purpose'     },
                 { id: 3,    title: 'PHP ',          body: 'PHP is a general-purpose scripting language' },
             ],
-            title: '',
-            body: '',
         }
     },
     methods: {
-        // Duymeni basdiqda 'newPost' adinda obyekt yaradilir. Bu obyektin 3 xassesi var. 
-        // a) 1ci xasseye (id) identifikator olaraq tarix veririk.
-        // b) 2ci xasseye (title) INPUT taginden DATA() icindeki TITLE xassesine gonderilen deyeri veririk.
-        // c) 3ci xasseye (body)  INPUT taginden DATA() icindeki BODY  xassesine gonderilen deyeri veririk.
-        createPost() {
-            const newPost = {
-                // Bu deyerleri elde etdikden sonra, onlari DATA() icindeki POSTS array-ina yerlesdirmeliyik. Bunun ucun PUSH() metodundan istifade edeceyik.
-                id: Date.now(),
-                title: this.title,
-                body: this.body,
-            }
-            // POSTS array-ini cagiririq ve newPost obyektini onun icine PUSH edirik. 
-            this.posts.push(newPost)
+        createPost(post) {
+            this.posts.push(post);
         }
     },
 }
@@ -54,35 +42,8 @@ export default {
 
 <style>
     *{ margin: 0; padding: 0; box-sizing: border-box; }
-    .post{
-        padding: 15px;
-        border: 2px solid teal;
-        margin-top: 15px;
-    }
+
     .app{
         padding: 20px;
-    }
-    form{
-        display: flex;
-        flex-direction: column;
-    }
-    .input{
-        width: 100%;
-        border: 1px solid teal;
-        padding: 10px 15px;
-        margin-top: 15px;
-    }
-    .btn{
-        margin-top: 15px;
-        align-self: flex-end;
-        padding: 10px 15px;
-        background: none;
-        color: teal;
-        border: 1px solid teal;
-        cursor: pointer;
-    }
-    .btn:hover{
-        background-color: teal;
-        color: #fff;
     }
 </style>
