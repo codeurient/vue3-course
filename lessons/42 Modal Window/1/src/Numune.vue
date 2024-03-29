@@ -1,8 +1,12 @@
 <template>
     <div class="app">
-        <h1>Page with posts</h1>
-        <my-button @click="showDialog" >Create post</my-button>
-        <my-dialog v-model:show="dialogVisible"> 
+        <!-- 
+            1) MyDialog faylinin icinde olan <slot></slot> tag-lerine, <post-form/> avtomatik elave edilecek.
+            2) MyDialog faylini index.js icinde import etdiyimiz ucun Numune.vue icinde import etmeye ehtiyac yoxdur.
+            3) Numune.vue faylinda MyDialog.vue import edildiyi ucun hemin bu MyDialog icinde olan props-u Numune faylinda istifade ede bilirik.
+            4) SHOW props-una TRUE deyerini gonderirik.  
+        -->
+        <my-dialog :show="true"> 
             <post-form @create="createPost"/> 
         </my-dialog>
         <post-list :posts="posts" @remove="removePost"/>
@@ -24,7 +28,6 @@ export default {
                 { id: 2,    title: 'Python ',       body: 'Python is a high-level, general-purpose'     },
                 { id: 3,    title: 'PHP ',          body: 'PHP is a general-purpose scripting language' },
             ],
-            dialogVisible: false,
         }
     },
     methods: {
@@ -33,9 +36,6 @@ export default {
         },
         removePost(post) {
             this.posts = this.posts.filter(p => p.id !== post.id);
-        },
-        showDialog(){
-            this.dialogVisible = true;
         }
     },
 }
