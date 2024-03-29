@@ -1,13 +1,10 @@
 <template>
     <div class="app">
         <h1>Page with posts</h1>
-
-        <my-button @click="showDialog" style="margin: 15px 0;">Create post</my-button>
-
+        <my-button @click="showDialog" >Create post</my-button>
         <my-dialog v-model:show="dialogVisible"> 
             <post-form @create="createPost"/> 
         </my-dialog>
-
         <post-list :posts="posts" @remove="removePost"/>
     </div>
 </template>
@@ -33,6 +30,8 @@ export default {
     methods: {
         createPost(post) {
             this.posts.push(post);
+            // MODAL pencere acildiqdan sonra post elave etmek ucun CREATE duymesini basdiqda hemin MODAL pencerenin qapanmasini isteyirikse onda
+            // bu createPost() funksiyasina 'dialogVisible' xassesini cagiraraq false deyerini veririk. 
             this.dialogVisible = false;
         },
         removePost(post) {
@@ -40,8 +39,7 @@ export default {
         },
         showDialog(){
             this.dialogVisible = true;
-        },
-        
+        }
     },
 }
 </script> 

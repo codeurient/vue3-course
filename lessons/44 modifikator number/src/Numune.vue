@@ -1,6 +1,11 @@
 <template>
     <div class="app">
         <h1>Page with posts</h1>
+        <!-- 
+            number modifikatoru olmasa input tag-ine girilen deyer number olsa bele string kimi dirnaqciqlar icinde yazdirilir
+            Eger number modifikatorundan istifade etsek onda input tag-ine girilen deyerler dirnaqciqlar olmadan elave edilecek.
+         -->
+        <input type="text" v-model.number="araBosluqlariniYoxEtmek">
 
         <my-button @click="showDialog" style="margin: 15px 0;">Create post</my-button>
 
@@ -28,6 +33,8 @@ export default {
                 { id: 3,    title: 'PHP ',          body: 'PHP is a general-purpose scripting language' },
             ],
             dialogVisible: false,
+            // araBosluqlariniYoxEtmek 
+            araBosluqlariniYoxEtmek: '',
         }
     },
     methods: {
@@ -40,8 +47,7 @@ export default {
         },
         showDialog(){
             this.dialogVisible = true;
-        },
-        
+        }
     },
 }
 </script> 
