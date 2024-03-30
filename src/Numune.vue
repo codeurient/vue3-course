@@ -1,20 +1,47 @@
 <template>
     <div class="app">
         <h1>Page with posts</h1>
-        <!--  1)  Muveqqeti olaraq bir duyme yaradiriq ki, klikledikde, @click event-i ile fetchPosts() adli funksiyamizi cagiraq  -->
-        <my-button @click="fetchPosts">Get posts</my-button>
-        
+        <!-- 
+            Her komponentin hookileri ve xususi funksiyalari vardir hansi ki, bunlar proqramin mueyyen merhelelerinde, etaplarinda işləməyə başlayırlar.
+            Mesel ucun: beforeCreate. 
+            1) beforeCreate: bu funksiya komponent yaranmamisdan evvel çağrılır. 
+            2) created:      bu funksiya komponent yarandiqdan sonra ancaq DOM agacina monte edilmemisden evvel çağrılır. Monte yəni, mantajlamaq.
+            3) beforeMount:  bu funksiya komponent                         DOM agacina monte edilmemisden evvel çağrılır. Monte yəni, mantajlamaq.
+
+            created ve beforeMount bir-birine benzedi ele deyil mi ? Aralarindaki ferq asagidakilardır:
+            a) created     funksiyasinda komponent başlanğıc mərhələsini yeni yaranma merhelesini kecdi ancaq hem DOM agacina hemede ANA komponente qosulma imkani yoxdur.
+            b) beforeMount funksiyasinda komponent başlanğıc mərhələsini yeni yaranma merhelesini kecdi ve DOM agacina qosulma imkani var ancaq heleki elave edilmeyib.
+
+            4) mounted      bu funksiya komponent DOM-a uğurla elave edildikden sonra çağırılır. Artiq bu merhelede DOM agaci ile islemek mumkundur. Yəni, yeni elementler
+                            yeni stiller elave ede yaxud sile bilerik. İstifadəçilər komponentlə qarşılıqlı əlaqədə ola, məlumatlar daxil edə, düymələri klikləyə və digər 
+                            hərəkətləri yerinə yetirə bilərlər. Xarici menbelerden, serverlerden data-lar yukleye bilerik. 
+
+            Komponent DOM agacina montaj (mounted) edildikden sonra, hansisa melumatlar yenilene, deyise biler. Melumatlar yenilenende, deyisende komponent yeniden render 
+            edilecek. Renderinq ne demekdir ? Renderinq, melumatlarin deyismesi zamani web sehifenin ve ya komponentin vizual gorunusunun yenilenmesi, yeniden formalasmasi demekdir.
+
+            Komponent renderinq edildiyinde bu deyisiklikleri izleye bilmeyimiz ucun elave 2 hook movcuddur. a) beforeUpdate    b) updated
+            5) beforeUpdate  bu funksiya komponent yenilenmeden ve bu yenilenmeler DOM agacina elave edilmeden evvel çağrılır.
+            6) updated       bu funksiya komponent yenilendikden ve bu yenilenmeler DOM agacina elave edildikden sonra çağrılır.
+
+
+            7) beforeUnmount bu funksiya komponent DOM agacindan silinene qeder çağrılır.
+            8) unmounted     bu funksiya komponent DOM agacindan silindikden sonra çağrılır.
+
+
+            Burda heleki en esas ve bize lazim olacaq funksiya MOUNTED funksiyasidir. 
+
+         -->
         <my-button @click="showDialog" style="margin: 15px 0;">Create post</my-button>
-        <my-dialog v-model:show="dialogVisible"> 
-            <post-form @create="createPost"/> 
-        </my-dialog>
+
+        <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
+
         <post-list :posts="posts" @remove="removePost"/>
     </div>
 </template>
 <script>
 import PostForm from "./components/PostForm.vue";
 import PostList from "@/components/PostList.vue";
-import axios from "axios";  // Kitabxanani import edirik.
+import axios from "axios";  
 
 export default {
     components: {
@@ -23,10 +50,8 @@ export default {
 
     data() {
         return {
-            posts: [
-                { id: 1,    title: 'JavaScript ',   body: 'JavaScript is a strong language'             },
-                { id: 2,    title: 'Python ',       body: 'Python is a high-level, general-purpose'     },
-                { id: 3,    title: 'PHP ',          body: 'PHP is a general-purpose scripting language' },
+            posts: [ 
+                
             ],
             dialogVisible: false,
         }
@@ -42,22 +67,13 @@ export default {
         showDialog(){
             this.dialogVisible = true;
         },
-        // 2) Bu funksiya bize adidir. Yeni Vue js-in deyil. Bu funksiyadan fake bir serevere REQUEST (sorgu) gondermek ve RESPONSE (cavab) almaq ucun istifade edirik.
         async fetchPosts() {
-            // 3) Kodlarimizi try-catch blokunda yaziriq ki, birden xeta bas verse hemin xeta haqqinda etrafli melumat ala bilek.
             try{
-                // 4) response adinda deyisken yaradaraq elde etdiyimiz sorgunun neticesini bu deyiskene yerlesdiririk
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
-                // 5) neticenin gelib gelmediyini yoxlamaq ucun console bu deyiskeni yazdiririq.
-                console.log(response);
+                this.posts = response.data;
             }catch(e){
                 console.log('error');
             }
-            // Daha etrafli: Bizim data elde edeceyimiz oz serverimiz olmadigi ucun, fakse server kimi istifade edeceyimiz saytdan data cekirik.
-            // Bunun ucun istifade etdiyimiz saytin adi beledir: jsonplaceholder.typicode.com
-            // Default olaraq 100 dene melumat verdiyi ucun hemin sayt, bizde QUERY parametrinden istifade ederek 10 dene limit teyin edirik: _limit=10
-            // Serverden gelen melumatlari ise elde etmek ucun GET() metodundan yararlaniriq. 
-            // REQUEST gondermek ucun AXIOS kitabxanasindan istifade edeceyik. Bunun ucun hemin kitabxanani yuklemek ve import etmek lazimdir: sudo npm -i axios
         }
     },
 }

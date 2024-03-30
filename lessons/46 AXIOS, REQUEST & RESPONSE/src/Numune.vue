@@ -24,9 +24,7 @@ export default {
     data() {
         return {
             posts: [
-                { id: 1,    title: 'JavaScript ',   body: 'JavaScript is a strong language'             },
-                { id: 2,    title: 'Python ',       body: 'Python is a high-level, general-purpose'     },
-                { id: 3,    title: 'PHP ',          body: 'PHP is a general-purpose scripting language' },
+                // Bizim sorgularimiz serverden geldiyi ucun, artiq ozumuzun burda el ile yazmis oldugu DATA-lara ehtiyacimiz yoxdur.
             ],
             dialogVisible: false,
         }
