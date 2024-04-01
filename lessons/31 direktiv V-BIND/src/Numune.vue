@@ -11,7 +11,7 @@
 -->
         <form>
             <h4>Creating post</h4>
-            <input v-bind:value="title" class="input" type="text" placeholder="Title of post">
+            <input :value="title">
             <input v-bind:value="body" class="input" type="text" placeholder="Body of post">
             <button class="btn" @click="createPost">Create post</button>
         </form>

@@ -1,15 +1,14 @@
 <template>
     <div class="app">
         <h1>Page with posts</h1>
-
+             
         <div class="app__btns">
             <my-button @click="showDialog" >Create post</my-button>
             <my-select v-model="selectedSort" :options="sortOptions"/> 
         </div>
-        
-        <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
 
-        <post-list v-if="!isPostLoading" :posts="sortedPosts" @remove="removePost" />
+        <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
+        <post-list v-if="!isPostLoading" :posts="posts" @remove="removePost" />
 
         <div v-else>Loading...</div>
     </div>
@@ -60,9 +59,11 @@ export default {
     mounted() {
         this.fetchPosts();
     },
-    computed :{
-        sortedPosts() {
-            return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
+    watch :{
+        // Bu numunede olan 'selectedSort' model-i sade bir misaldir ve sadece true ile false qaytarir. Eger WACTH sistemini obyekt ucun tetbiq etseydik 
+        // onda daha ferqli bir formada yazmali olacaqdiq. Meselen: PostForm komponentinde buna bir misal yaza bilerik.
+        selectedSort(newValue) {
+            console.log(newValue);
         }
     }
 }

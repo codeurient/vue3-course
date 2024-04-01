@@ -1,15 +1,21 @@
 <template>
     <div class="app">
-        <h1>Page with posts</h1>
 
+        <h1>Page with posts</h1>
+             
         <div class="app__btns">
             <my-button @click="showDialog" >Create post</my-button>
+            <!-- 1) v-model direktivi ile qarsiliqli elaqe quraraq, ALT komponent olan MySelect-den $EMIT edilen deyeri alacaq 'selectedSort' modelini yaradiriq. -->
             <my-select v-model="selectedSort" :options="sortOptions"/> 
+            <!-- 
+                4) sortOptions array-ini :options direkivi ile props edirik MySelect komponentine. Burda olan : iki cut noqte V-BIND direktividir hansi ki, komponentler arasi elaqe
+                yaratmaqda istifade edilir.  : cut noqteden sonra PROPS-un adini qeyd etmeliyik. Hemin ad ALT komponentde olan OPTIONS-dur. Ozetleyisi olsaq: V-BIND ile komponentler
+                arasinda elaqe yaradaraq, sortOptions array-ini ANA komponentden ALT komponentin OPTIONS props-una gonderirik.
+            -->
         </div>
-        
-        <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
 
-        <post-list v-if="!isPostLoading" :posts="sortedPosts" @remove="removePost" />
+        <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
+        <post-list v-if="!isPostLoading" :posts="posts" @remove="removePost" />
 
         <div v-else>Loading...</div>
     </div>
@@ -27,7 +33,9 @@ export default {
             posts: [],
             dialogVisible: false,
             isPostLoading: false,
+            // 2) ALT komponent olan MySelect-den ANA komponent olan Numune faylina $EMIT edilecek modeli yaradiriq.
             selectedSort: '',
+            // 3) ANA komponent olan Numune faylindan ALT komponent olan MySelect faylina PROPS edilecek Array-i yaradiriq.
             sortOptions: [
                 {value: 'title', name: 'By title'},
                 {value: 'body',  name: 'By body'}
@@ -59,11 +67,6 @@ export default {
     },
     mounted() {
         this.fetchPosts();
-    },
-    computed :{
-        sortedPosts() {
-            return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
-        }
     }
 }
 </script> 

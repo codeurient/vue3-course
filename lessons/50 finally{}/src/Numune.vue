@@ -1,15 +1,12 @@
 <template>
     <div class="app">
+
         <h1>Page with posts</h1>
 
-        <div class="app__btns">
-            <my-button @click="showDialog" >Create post</my-button>
-            <my-select v-model="selectedSort" :options="sortOptions"/> 
-        </div>
-        
-        <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
+        <my-button @click="showDialog" style="margin: 15px 0;">Create post</my-button>     
 
-        <post-list v-if="!isPostLoading" :posts="sortedPosts" @remove="removePost" />
+        <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
+        <post-list v-if="!isPostLoading" :posts="posts" @remove="removePost" />
 
         <div v-else>Loading...</div>
     </div>
@@ -27,11 +24,6 @@ export default {
             posts: [],
             dialogVisible: false,
             isPostLoading: false,
-            selectedSort: '',
-            sortOptions: [
-                {value: 'title', name: 'By title'},
-                {value: 'body',  name: 'By body'}
-            ]
         }
     },
     methods: {
@@ -47,6 +39,9 @@ export default {
         },
         async fetchPosts() {
             try{
+                // setTimeOut() test meqsedli gozletme yaratmaq ucun idi.. Yuklenme eger gec olarsa onda finally{} blokunda 
+                // Loading... mesajini ekrana yazdir deye bilerik. Loading... sozu ekrana 1 saniye gozledikden sonra yox yuklenmenin agirligindan asili olaraq
+                // data-lar yuklenen muddet erzinde yuklenene qeder ekranda Loading... sozunu goreceyik. 
                 this.isPostLoading = true;
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
                 this.posts = response.data;
@@ -59,17 +54,14 @@ export default {
     },
     mounted() {
         this.fetchPosts();
-    },
-    computed :{
-        sortedPosts() {
-            return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
-        }
     }
 }
 </script> 
 
 <style>
     *{ margin: 0; padding: 0; box-sizing: border-box; }
-    .app{ padding: 20px; }
-    .app__btns{ display: flex; justify-content: space-between; margin: 15px 0; }
+
+    .app{
+        padding: 20px;
+    }
 </style>
