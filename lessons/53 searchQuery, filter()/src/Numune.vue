@@ -1,6 +1,8 @@
 <template>
     <div class="app">
         <h1>Page with posts</h1>
+        <!-- 1) Axtaris sistemi yaradiriq. INPUT tag-ini cagiraraq V-MODEL direktivi ile iki terefli elaqe yaradiriq. Model adi olaraq 'searchQuery' yaziriq.
+        Ozumuzden yaziriq hemin adı.  -->
         <my-input v-model="searchQuery" placeholder="Search..."></my-input>
 
         <div class="app__btns">
@@ -9,7 +11,7 @@
         </div>
         
         <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
-
+        <!-- 7) artiq post-list komponentine sortedAndSearchedPosts() funksiyasini veririk. -->
         <post-list v-if="!isPostLoading" :posts="sortedAndSearchedPosts" @remove="removePost" />
 
         <div v-else>Loading...</div>
@@ -29,6 +31,7 @@ export default {
             dialogVisible: false,
             isPostLoading: false,
             selectedSort: '',
+            // 2) searchQuery modelimizi elave edirik. Input tag-ine daxil edilen deyerler bu modele yazdirilir.
             searchQuery: '',
             sortOptions: [
                 {value: 'title', name: 'By title'},
@@ -66,8 +69,18 @@ export default {
         sortedPosts() {
             return [...this.posts].sort((post1, post2) => post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]));
         },
+        // 3) Sıralanmış ARRAY-ya gore necə axtarış ede bilerik ? Bunun ucun yeni yaratdigimiz computed xassenindeki funksiyada evvel yaratdigimiz funksiyani istifade ede bilerik.
         sortedAndSearchedPosts() {
-            return this.sortedPosts.filter(post => post.title.includes(this.searchQuery.toLowerCase()))
+            // 4) return this.sortedPosts deyerek ilk once siralanmis deyerleri elde edirik. sortedPosts() funksiyasi ARRAY qaytardigi ucun filter() metodundan istifade edeceyik.  
+            // 5) this.posts ARRAY-dir. filter() metodu bu arrayin icinden her deyeri ayri-ayri alaraq POST parametrine yerlesdirir. Ayri-ayri olan her deyer obyektdir. Bunu gormek ucun
+            // bele yaza bilersiz: return this.sortedPosts.filter(post => console.log(post))
+            // 6) post.title yazaraq basliq metnleri elde edirik. includes() metodu ise movcudlugu yoxlayir. Bu metoda arqument kimi 'searchQuery' modelini veririk. Yəni, input tag-ine 
+            // daxil edilen deyer 'post.title' icinde movcuddurmu kimi sorgu yaratmaq ucun?! 
+            return this.sortedPosts.filter(post => post.title.includes(this.searchQuery))
+
+            // 8) Evvel sortedPosts computed adini yazmisdiq ki funksiya return etsin neticeni. Indi ise bu adi pozduq ve yeni computed olan sortedAndSearchedPosts funksiyasini yazdiq.
+            // Nece olur ki bes 'sortedPosts' funksiyasi yenede title ve body-ye gore siralama ede bilir? Cunki 'sortedAndSearchedPosts' funksiyasi ilk once 'sortedPosts' funksiyasini return edir:
+            // (return this.sortedPosts). Sonra ise filter() metodu ile SIRALANAN postlari filtirleyirik. 
         }
     }
 }
