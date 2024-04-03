@@ -1,15 +1,13 @@
 <template>
     <div class="app">
         <h1>Page with posts</h1>
-
         <my-input v-model="searchQuery" placeholder="Search..."></my-input>
 
         <div class="app__btns">
-
             <my-button @click="showDialog" >Create post</my-button>
             <my-select v-model="selectedSort" :options="sortOptions"/> 
         </div>
-
+        
         <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
 
         <post-list v-if="!isPostLoading" :posts="sortedAndSearchedPosts" @remove="removePost" />
@@ -17,6 +15,15 @@
         <div v-else>Loading...</div>
 
         <div class="page__wrapper">
+            <!-- 
+                1) Novbe geldi indi 'page'-in dinamik deyisdirilmesine. Div tag-i kliklendikde 'changePage' funksiyasi cagrilacaq. 10 dene ayri-ayri div tag-i vardir.
+                @click EVENT-i hal-hazirda kliklenen div taginin nomresini qaytarir. 10 Dene div tag-i var ve her div tag-inin oz nomresi var. Bu nomreni arqument kimi 
+                gonderirik asagida yaratdigimiz changePage() funksiyasina ve deyeri PAGE modelinin icine yazdiririq.
+
+                2) 'current-page' klas adi her div tag-ine ayri-ayri elave edilir. pageNumber icide butun ededler var: pageNumber = 1,2,3,4,5,6,7,8,9,10
+                page 1 ulduqda hemin 1 ededi 1ci div tag-i ucun true qaytarir. 1ci div tag-ine 'current-page' klas adi elave edilir. Digerlerinde bu klas adi olmur.
+                page 2 ulduqda hemin 2 ededi 2ci div tag-i ucun true qaytarir. 2ci div tag-ine 'current-page' klas adi elave edilir. Digerlerinde bu klas adi olmur. ve.s
+            -->
             <div 
                 v-for="pageNumber in totalPages" 
                 :key="pageNumber" 
@@ -26,7 +33,6 @@
                 {{ pageNumber }}
             </div>
         </div>
-
     </div>
 </template>
 <script>
@@ -64,6 +70,7 @@ export default {
         showDialog(){
             this.dialogVisible = true;
         },
+        // Her kliklenen DIV tag-inin deyerini 'page' modeline veririk.
         changePage(pageNumber) {
             this.page = pageNumber;
         },
@@ -94,13 +101,6 @@ export default {
         },
         sortedAndSearchedPosts() {
             return this.sortedPosts.filter(post => post.title.includes(this.searchQuery.toLowerCase()))
-        }
-    },
-    // Ancaq daha dogru olar ki, postlarin yuklenmesi usu WATCH sisteminden faylanadaq. PAGE modeli ile eyni adda olan PAGE() funksiyasini
-    // yaratmaq lazimdir ki, PAGE adli model deyisdikde eyni adli funksiya avtomatik cagrilsin. 
-    watch: {
-        page() {
-            this.fetchPosts();
         }
     }
 }

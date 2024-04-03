@@ -26,7 +26,7 @@
                 {{ pageNumber }}
             </div>
         </div>
-
+        
     </div>
 </template>
 <script>
@@ -66,6 +66,24 @@ export default {
         },
         changePage(pageNumber) {
             this.page = pageNumber;
+            // 1) Indi novbe geldi her 'PAGE' deyisdikde hemin sehifeye uygun POST-larin yuklenmesine. Bunun ucun changePage() funksiyasinin icinde fetchPosts() funksiyasini
+            // cagirmaq lazimdir.
+
+            // 2) 100 dene post varsa ve her sehife ucun 10 post gorsensin demisikse onda demeli 10 dene de 'page' movcuddur. Bu 'page' modelinin deyeri her deyisdikde,
+            // asagida yaratmis oldugumuz fetchPosts() funksiyasinin icindeki LINK-e mentiqnen bele yazmis oluruq:
+            // https://jsonplaceholder.typicode.com/posts?_page=1&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=2&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=3&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=4&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=5&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=6&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=7&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=8&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=9&_limit=10
+            // https://jsonplaceholder.typicode.com/posts?_page=10&_limit=10
+            // changePage() funksiyasinin icinde fetchPosts() funksiyasini cagirmaqda meqsed odur ki, 'PAGE' modelinin deyeri deyisdikde her defe onunla birlikde deyisen bu
+            // linkleride fetchPosts() funksiyasi istifade ederek yeniden cagiraq ki, yeni linke sahib olan sehifeni yukleyerek deyisiklikleri gore bilek. 
+            this.fetchPosts();
         },
         async fetchPosts() {
             try{
@@ -94,13 +112,6 @@ export default {
         },
         sortedAndSearchedPosts() {
             return this.sortedPosts.filter(post => post.title.includes(this.searchQuery.toLowerCase()))
-        }
-    },
-    // Ancaq daha dogru olar ki, postlarin yuklenmesi usu WATCH sisteminden faylanadaq. PAGE modeli ile eyni adda olan PAGE() funksiyasini
-    // yaratmaq lazimdir ki, PAGE adli model deyisdikde eyni adli funksiya avtomatik cagrilsin. 
-    watch: {
-        page() {
-            this.fetchPosts();
         }
     }
 }

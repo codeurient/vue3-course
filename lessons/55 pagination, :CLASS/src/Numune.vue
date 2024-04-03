@@ -1,15 +1,13 @@
 <template>
     <div class="app">
         <h1>Page with posts</h1>
-
         <my-input v-model="searchQuery" placeholder="Search..."></my-input>
 
         <div class="app__btns">
-
             <my-button @click="showDialog" >Create post</my-button>
             <my-select v-model="selectedSort" :options="sortOptions"/> 
         </div>
-
+        
         <my-dialog v-model:show="dialogVisible">  <post-form @create="createPost"/>   </my-dialog>
 
         <post-list v-if="!isPostLoading" :posts="sortedAndSearchedPosts" @remove="removePost" />
@@ -17,16 +15,19 @@
         <div v-else>Loading...</div>
 
         <div class="page__wrapper">
-            <div 
-                v-for="pageNumber in totalPages" 
-                :key="pageNumber" 
-                class="page" 
-                :class="{'current-page' : page === pageNumber}" 
-                @click="changePage(pageNumber)">
-                {{ pageNumber }}
-            </div>
+            <!-- 
+                1) Burda (page in totalPages) yazirdi. Basimiz qarismasin deye 'page' sozu evezine 'pageNumber' yaziriq.
+                2) Bir sehifeden diger sehifeye kecdiyimizde, hemin sehifeni isaretlemek lazimdir ki, hansi sehifede oldugumuz bilinsin. Bunun ucun VUE js-de 
+                :class deyilen bir direktiv movcuddur. Hemin direktivden istifade ederek 'class' adı ile elaqe yaradiriq. Sonra ise 'if' konstruktorunda istifade 
+                ederek hal-hazirda hansi sehifedeyikse onun ucun CSS stili aktivlessin deyeceyik. 
+            -->
+            <div v-for="pageNumber in totalPages" :key="pageNumber" class="page" :class="{'current-page' : page === pageNumber}">{{ pageNumber }}</div>
+            <!-- 
+                3) :class direktivi obyekt olaraq qeyd edilir ve acar soz olaraq class adini istifade edirik. Hemin acar soz ucun TRUE ol demek eslinde bu klass
+                adinin class atributunun icine elave edilmesi demekdir: class="page current-page".
+                4) Hemin 'true' yaxud 'false' deyerlerini ise muqayise operatoru ile elde edirik. page === pageNumber. 
+             -->
         </div>
-
     </div>
 </template>
 <script>
@@ -64,9 +65,6 @@ export default {
         showDialog(){
             this.dialogVisible = true;
         },
-        changePage(pageNumber) {
-            this.page = pageNumber;
-        },
         async fetchPosts() {
             try{
                 this.isPostLoading = true;
@@ -94,13 +92,6 @@ export default {
         },
         sortedAndSearchedPosts() {
             return this.sortedPosts.filter(post => post.title.includes(this.searchQuery.toLowerCase()))
-        }
-    },
-    // Ancaq daha dogru olar ki, postlarin yuklenmesi usu WATCH sisteminden faylanadaq. PAGE modeli ile eyni adda olan PAGE() funksiyasini
-    // yaratmaq lazimdir ki, PAGE adli model deyisdikde eyni adli funksiya avtomatik cagrilsin. 
-    watch: {
-        page() {
-            this.fetchPosts();
         }
     }
 }
