@@ -87,8 +87,14 @@ export default {
         },
         async loadMorePosts() {
             try{
+                // 5) Her defe veb sehifeni asagi SCROLL etdikde yeni postlarin yuklenmesi ucun yeni sehifeye kecid etmek lazimdir. Bunun ucun de PAGE modelinin deyerini bir-bir artirmaliyiq.
+                // 100 dene post varsa eger 10cu sehifeye catdiqda bu 100cu post menasina gelir ve page = 11 olduqda hemin 11ci sehifede post olmadigi ucun yenileri yuklenmir. Burada 
+                // demisik ki, loadMorePosts() funksiyasi her defe cagrildiginda PAGE modelinin deyeri bir-bir artsin.
+                console.log(this.page);
+                console.log(this.totalPages);
                 this.page += 1;
 
+                // 3) Ve bu koduda hemcinin:  this.isPostLoading = true;
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
                     params: {
                          _page: this.page,
@@ -99,7 +105,7 @@ export default {
                 this.posts = [...this.posts, ...response.data];
             }catch(e){
                 console.log('error');
-            } 
+            } // 2) Her defe Yeni postlar ARRAY-a elave etdikde LOADING... mesajini yazdirmaga ehtiyac yoxdur. Bunun ucun bu kodu silirik:  finally{ this.isPostLoading = false; }
         }
     },
     mounted() {
@@ -109,6 +115,8 @@ export default {
             rootMargin: "0px",
             threshold: 1.0,
         };
+        // 1) SELF deyiskenine THIS acar sozunu vermeden daha qisa sekilde loadMorePosts() funksiyasini cagirmaq ucun OXLU funksiyadan istifade ede bilerik.
+        // 6) if(entries[0].isIntersecting && this.page < this.totalPages) - bele yazmasaq PAGE modelinin deyeri her defe POST yuklenmese bele arta-arta gede biler. 
         const callback = (entries, observer) => {
             if(entries[0].isIntersecting && this.page < this.totalPages){
                 this.loadMorePosts();  
@@ -116,6 +124,8 @@ export default {
         };
         
         const observer = new IntersectionObserver(callback, options);
+        // 4) Bir soznen observe() metodu, izlənməsi, müşahidə edilməsi üçün DOM elementini qeydiyyata alır. Qeydiyyata alinan DOM element gorus penceresine girdikde yaxud cixdiqda 
+        // IntersectionObserver obyektinin callback funksiyasi her defe cagrilacaq.
         observer.observe(this.$refs.observer);
     },
 

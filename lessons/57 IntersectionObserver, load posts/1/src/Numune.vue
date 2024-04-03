@@ -16,7 +16,15 @@
 
         <div v-else>Loading...</div>
 
-        <div ref="observer" class="observe"></div>
+        <!-- 
+            3) DIV tag-i ile blok yaradiriq. Hemin bloku sehifenin sonunda siyahinin en altina qoyuruq. Brovserin Intersection Observer adinda xususi API-si vardir hansi ki, 
+            onun komekliyi ile, bu blokun ne vaxt sehifenin sonunda peyda olacagini izleye bilerik. Yəni, veb sehifenin mueyyen bir hundurluyu var ve en sonda DIV tag-i movcuddur. 
+            Bu hundurluyu asagi yuxari scroll ede bilirik ve en asagi scroll etdikde hemin blok peyda olacaq. Scroll en asagi catib hemin blok peyda olanda bir emeliyyat icra etmek 
+            ucun callback funksiyadan istifade edeceyik. 
+
+            Bu saytda hemin API haqqinda etrafli yazilmisdir: https://developer.mozilla.org/ru/docs/Web/API/Intersection_Observer_API
+        -->
+        <div class="observe"></div>
 
         <!-- <div class="page__wrapper">
             <div 
@@ -85,10 +93,11 @@ export default {
                 this.isPostLoading = false;
             }
         },
+        // 1) Bu funksiyani o vaxt cagirasiyiq ki, istifadeci sehifeni sona qeder scroll etsin. Sona catdiqda ise data-lar yuklensin. Data-larin yuklenmesi o vaxt bas veririk
+        // ki, THIS.POST array-ina yenileri elave edilsin. Birden cox qayda var ki, bu qaydalardan istifade ederek, istifadecinin sehifeni sona qeder scroll edib etmediyini oyrenek.
         async loadMorePosts() {
             try{
-                this.page += 1;
-
+                this.isPostLoading = true;
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
                     params: {
                          _page: this.page,
@@ -96,28 +105,38 @@ export default {
                     }
                 });
                 this.totalPages = Math.ceil( response.headers['x-total-count'] / this.limit );
+                // 2) Serverden Response geldikden sonra elde etdiyimiz postlari POSTS array-ina gondermirik. Hemin postlari POSTS array-inin sonuna elave edirik.
+                // Bunun ucun [] yeni array yaradiriq, sonra ise bu array-in icine elimizde olan postlari elave edirik: ( ...this.posts) sonra ise serverden gelen postlari 
+                // elave edirik: (...response.data). Sonra ise bu array-yi yeresdiririk THIS.POSTS modelinin icine. 
                 this.posts = [...this.posts, ...response.data];
             }catch(e){
                 console.log('error');
-            } 
+            } finally{
+                this.isPostLoading = false;
+            }
         }
     },
     mounted() {
         this.fetchPosts();
-
+        // 4) Komponent DOM-a elave edildikden sonra mounted() funksiyasinin icine hemin DIV blokunu izleyecek olan kodumuzu elave edirik.
         const options = {
+            // 5) Burda root var idi ancaq biz onu sildik cunki root-un olmamasi avtomatik olaraq brovser penceresinin gorunen hissesinin tamamini nezere al demekdir. 
             rootMargin: "0px",
             threshold: 1.0,
         };
-        const callback = (entries, observer) => {
-            if(entries[0].isIntersecting && this.page < this.totalPages){
-                this.loadMorePosts();  
-            }
+        // 6) callback funksiyasi bize lazim olan esas funksiyasdir. Hansi ki, bu funksiya hər dəfə o vaxt çağrılır ki, təyin edilmiş element baxış pəncərəsinə (viewport) daxil olsun 
+        // yaxud baxış pəncərəsindən çıxsın. 
+        const callback = function (entries, observer) {
+
         };
-        
+        // 7) IntersectionObserver (Kəsişmənin müşahidə edilməsi) klasi, JS-in daxili klasidir. 2 parametr qebul edir. 1ci parametr 2ci parametrden asilidir. 2ci parametr olan OPTIONS 
+        // onu bildirir ki, baxış pəncərəsinə girdikmi yaxud baxış pəncərəsinden cixdiqmi. Baxış pəncərəsinə girdikde yaxud cixdiqda 1ci parametrde olan 'callback' her defe tekrar-tekrar 
+        // cagrilacaqdir. Serhed olaraq ise brovser penceresinin tamamini nezerde tutmusuq. Cunki, ROOT xassesini bayaq sildik.  
         const observer = new IntersectionObserver(callback, options);
-        observer.observe(this.$refs.observer);
     },
+
+
+
 
 
     computed :{

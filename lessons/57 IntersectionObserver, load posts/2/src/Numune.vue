@@ -16,6 +16,17 @@
 
         <div v-else>Loading...</div>
 
+<!-- 
+    1) Vue.js elementleri yaxud komponentleri cagiraraq JavaScript-də istifadə edə bilmeyimiz ucun hemin element yaxud komponentlere link verilir. Link vermek ucun "REF" atributundan 
+    (acar sozunden) istifade edilir. Hal-hazirda DIV tag-ine link vermis sayiliriq. Bu div tag-inin REF atributu icinde yazilan OBSERVER sozu hemin tag-i hansi ad ile elde edeceyimizi bildirir.
+
+    Bu tag-in REF atributuna onun ucun ad veririk ki, hemin adı OBSERVE() funksiyasi içində yazaraq callback funksiyasına bildirək ki, kəsişmə hansı DOM elementi ilə müşahidə ediləcək. Yəni, Baxış 
+    pəncərəsinə girən yaxud çıxan TAG budur və bu tag-i gordükdə callback funksiyası çağrılsın. 
+
+    REF ilə link verilən DOM elementi artıq Component içində çağıraraq istifadə edə bilərik. Həmin DOM elementi component içində çağırmaq üçün belə yazırıq:   this.$refs.observer
+
+    ref atirubutu icinde yazilan 'observer' sozu istenilen soz ola biler. 
+-->
         <div ref="observer" class="observe"></div>
 
         <!-- <div class="page__wrapper">
@@ -87,8 +98,7 @@ export default {
         },
         async loadMorePosts() {
             try{
-                this.page += 1;
-
+                this.isPostLoading = true;
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
                     params: {
                          _page: this.page,
@@ -99,23 +109,44 @@ export default {
                 this.posts = [...this.posts, ...response.data];
             }catch(e){
                 console.log('error');
-            } 
+            } finally{
+                this.isPostLoading = false;
+            }
         }
     },
     mounted() {
         this.fetchPosts();
-
+        
         const options = {
             rootMargin: "0px",
             threshold: 1.0,
         };
-        const callback = (entries, observer) => {
-            if(entries[0].isIntersecting && this.page < this.totalPages){
-                this.loadMorePosts();  
+
+        // 6) Xeta almamaq ucun ise CALLBACK xaricinde THIS acar sozunu SELF adli bir deyiskene vererek istifade edirik. CALLLBACK xaricinde istifade etdiyimiz THIS acar sozu VUE komponentidir.
+        // VUE komponenti icinde ise diger butun metodlar, modeller ve.s movcuddur. Hemin metodlara, modellere ve.s muraciet etmek ucun ise artiq SELF deyiskeninden istifade ede bilerik.
+        const self = this;
+
+        const callback = function (entries, observer) {
+            // 3) Her defe gorus penceresinde girdikde ve cixdiqda callback funksiyasi cagrilacaq. Qayidan netice ise beledir:
+            // a) 0 IntersectionObserverEntry {time: 200, rootBounds: DOMRectReadOnly, boundingClientRect: DOMRectReadOnly, intersectionRect: DOMRectReadOnly, isIntersecting: TRUE, …}
+            // b) 0 IntersectionObserverEntry {time: 200, rootBounds: DOMRectReadOnly, boundingClientRect: DOMRectReadOnly, intersectionRect: DOMRectReadOnly, isIntersecting: FALSE, …}
+            // Girdikde TRUE cixdiqda ise FALSE aliriq. Ancaq bize lazim olan hemin funksiyanin sadece bir defe o da gorus penceresine girdiyimizde cagrilmasidir. Gorus penceresine
+            // girib cixdigimizi ise hemin 'isIntersecting' acar sozunun deyerinden teyin edirik. TRUE olarsa girdik FALSE olarsa cixdiq demekdir. 
+            // console.log(entries);
+            // 4) IF konstruktorundan istifade ederek şert qosuruq ki, sadece TRUE olarsa POSTlari elave et. Movcud postlara yenilerini elave etmek ucun ise yuxarida loadMorePosts()
+            // funksiyasini yaratmisdiq. Indide istediyimize nail olmaq ucun hemin o funksiyani cagirmaq lazimdir.
+            if(entries[0].isIntersecting){
+                // 5) THIS acar sozu normalda diger funksiyalari, modelleri ve.s cagirmaq ucun istifade edilir. Ancaq JS-de, IntersectionObserver obyektinin CALLBACK funksiyasi icinde THIS 
+                // acar sozunuden istifade etdikde NULL deyerini aliriq. Buna gorede THIS acar sozunu bir basa yazaraq istifade etdikde xeta alariq. 
+                self.loadMorePosts();
             }
+            
+
+           
         };
-        
         const observer = new IntersectionObserver(callback, options);
+        // 2) Bir soznen observe() metodu, izlənməsi, müşahidə edilməsi üçün DOM elementi qeydiyyata alır. Qeydiyyata alinan DOM element gorus penceresine girdikde yaxud cixdiqda 
+        // IntersectionObserver obyektinin callback funksiyasi her defe cagrilacaq.
         observer.observe(this.$refs.observer);
     },
 

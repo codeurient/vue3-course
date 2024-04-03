@@ -72,7 +72,7 @@ export default {
         }
     },
     mounted() {
-        // Bu hook komponent DOM-a elave edildikden sonra isleyecek ve fetchPosts() funksiyasini cagiracaq.
+        // Bu hook, komponent DOM-a elave edildikden sonra isleyecek ve fetchPosts() funksiyasini cagiracaq.
         this.fetchPosts();
     }
 }
