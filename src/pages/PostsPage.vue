@@ -19,6 +19,8 @@
     </div>
 </template>
 <script>
+// 1) Indi təkrar-təkrar yenidən istifadə edilə bilən KOD funksionallıgi yaradaq. Təkrar-təkrar istifadə oluna bilməyə misal olaraq KOMPONENT-lerin ayri-ayri
+// parcalara bolunmesini gostermek olar, hansi ki, artiq bunu etmisik. Hemin komponentleri proqrmain ferqli hisselerinde bir defeden cox istifade ede bilerik.
 import PostForm from "@/components/PostForm.vue";
 import PostList from "@/components/PostList.vue";
 
@@ -90,6 +92,10 @@ export default {
     },
     mounted() {
         this.fetchPosts();
+        // 2) Indi ise öz direktivlerimizi yaratmağı oyrenek. Mesel ucun web sehifeni asagi surusdurdukce daha çox yükləme funksionalligini heyata keciren 
+        // kodumuzu ayrica bir direktiv icine yerlesdirerek, ferqli komponentler icinde tekrar-tekrar istifade ede bilerik. 
+        
+        // 3) Bunun ucun 'DIRECTIVES' adinda qovluq emele getirerek her kod ucun ayrica FAYL yaradiriq.
 
         const options = {
             rootMargin: "0px",
