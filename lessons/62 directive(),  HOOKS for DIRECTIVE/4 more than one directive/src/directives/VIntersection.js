@@ -14,5 +14,6 @@ export default {
         observer.observe(el);
     },
 
+    // 1) main.js faylinda 'name' xassesinde yazdigimiz deyeri elde ederek hemin ad ile qeydiyyata saliriq direktivi
     name: 'intersection'
 }

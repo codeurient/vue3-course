@@ -2,7 +2,7 @@
     <div>
         <h1>Page with posts</h1>
 
-        <my-input v-model="searchQuery" placeholder="Search..." v-focus ></my-input>
+        <my-input v-model="searchQuery" placeholder="Search..."></my-input>
 
         <div class="app__btns">
             <my-button @click="showDialog" >Create post</my-button>
@@ -15,7 +15,8 @@
 
         <div v-else>Loading...</div>
 
-        <div v-intersection="loadMorePosts" class="observe"></div>
+        <!-- 1) VIntersection direktivini cagirirq.  -->
+        <div v-intersection class="observe"></div>
     </div>
 </template>
 <script>
@@ -90,6 +91,19 @@ export default {
     },
     mounted() {
         this.fetchPosts();
+
+        // const options = {
+        //     rootMargin: "0px",
+        //     threshold: 1.0,
+        // };
+        // const callback = (entries, observer) => {
+        //     if(entries[0].isIntersecting && this.page < this.totalPages){
+        //         this.loadMorePosts();  
+        //     }
+        // };
+        
+        // const observer = new IntersectionObserver(callback, options);
+        // observer.observe(this.$refs.observer);
     },
 
 

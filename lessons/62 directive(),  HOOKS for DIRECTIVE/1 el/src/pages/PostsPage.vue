@@ -2,7 +2,7 @@
     <div>
         <h1>Page with posts</h1>
 
-        <my-input v-model="searchQuery" placeholder="Search..." v-focus ></my-input>
+        <my-input v-model="searchQuery" placeholder="Search..."></my-input>
 
         <div class="app__btns">
             <my-button @click="showDialog" >Create post</my-button>
@@ -15,10 +15,12 @@
 
         <div v-else>Loading...</div>
 
-        <div v-intersection="loadMorePosts" class="observe"></div>
+        <div ref="observer" class="observe"></div>
     </div>
 </template>
 <script>
+// 1) Indi təkrar-təkrar yenidən istifadə edilə bilən KOD funksionallıgi yaradaq. Təkrar-təkrar istifadə oluna bilməyə misal olaraq KOMPONENT-lerin ayri-ayri
+// parcalara bolunmesini gostermek olar, hansi ki, artiq bunu etmisik. Hemin komponentleri proqrmain ferqli hisselerinde bir defeden cox istifade ede bilerik.
 import PostForm from "@/components/PostForm.vue";
 import PostList from "@/components/PostList.vue";
 
@@ -90,6 +92,25 @@ export default {
     },
     mounted() {
         this.fetchPosts();
+        // 2) Indi ise öz direktivlerimizi yaratmağı oyrenek. Mesel ucun web sehifeni asagi surusdurdukce daha çox yükləme funksionalligini heyata keciren 
+        // kodumuzu ayrica bir direktiv icine yerlesdirerek, ferqli komponentler icinde tekrar-tekrar istifade ede bilerik. 
+        
+        // 3) Bunun ucun 'DIRECTIVES' adinda qovluq emele getirerek her kod ucun ayrica FAYL yaradiriq. Direktivler V herfi ile basladigi ucun fayllarinda 
+        // adlarinin bas herfini V qoyacagiq. Ilk direktivimizin adini VIntersection.js qoyuruq. Cunki bu fayla yerlesdirmek istediyimiz kodlar Intersection Observer
+        // (Kesimenin Musahide Edilmesi) ile baglidir. 
+
+        const options = {
+            rootMargin: "0px",
+            threshold: 1.0,
+        };
+        const callback = (entries, observer) => {
+            if(entries[0].isIntersecting && this.page < this.totalPages){
+                this.loadMorePosts();  
+            }
+        };
+        
+        const observer = new IntersectionObserver(callback, options);
+        observer.observe(this.$refs.observer);
     },
 
 

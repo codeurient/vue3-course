@@ -2,7 +2,7 @@
     <div>
         <h1>Page with posts</h1>
 
-        <my-input v-model="searchQuery" placeholder="Search..." v-focus ></my-input>
+        <my-input v-model="searchQuery" placeholder="Search..."></my-input>
 
         <div class="app__btns">
             <my-button @click="showDialog" >Create post</my-button>
@@ -90,6 +90,21 @@ export default {
     },
     mounted() {
         this.fetchPosts();
+
+        // 1) Indi ise 'PostsPage' komponentinde yazdigimiz bukodu goturerek 'VIntersection' direktivine yerlesdire bilerik. 
+
+        // const options = {
+        //     rootMargin: "0px",
+        //     threshold: 1.0,
+        // };
+        // const callback = (entries, observer) => {
+        //     if(entries[0].isIntersecting && this.page < this.totalPages){
+        //         this.loadMorePosts();  
+        //     }
+        // };
+        
+        // const observer = new IntersectionObserver(callback, options);
+        // observer.observe(this.$refs.observer);
     },
 
 

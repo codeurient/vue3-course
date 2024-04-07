@@ -7,10 +7,14 @@
 </template>
 
 <script>
+// 2) 'toogleMixins' faylini istifade ede bilmeyimiz ucun Hemin fayli ilk once Import etmeliyik. Basda yazdigimiz 'toogleMixins' istediyimiz ad ola biler.
+// Import etdikden sonra bu ad ile istifade edeceyimizi bildirmek ucundur hemin 'toogleMixins' yazisi... 
 import toogleMixins from '@/mixins/toogleMixins';
 
     export default {
         name: 'my-dialog',
+        // 1) tekrarlana bilecek hisseni burdan goturerek MIXINS icine yerlesdirdik. Sonra ise mixins-i 'MyDialog' yaxud eger basqa hardasa istifade edeceyikse 
+        // hemin fayllarin icinde cagira bilerik.
         mixins: [toogleMixins]
     }
 </script>

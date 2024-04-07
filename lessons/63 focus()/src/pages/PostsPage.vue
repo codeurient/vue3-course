@@ -1,8 +1,8 @@
 <template>
     <div>
         <h1>Page with posts</h1>
-
-        <my-input v-model="searchQuery" placeholder="Search..." v-focus ></my-input>
+        <!-- 1) Eyni direktivi bir defe yaratdiq ancaq hem PostsPage hemde PostForm icinde istifade etdik. -->
+        <my-input v-model="searchQuery" placeholder="Search..." v-focus></my-input>
 
         <div class="app__btns">
             <my-button @click="showDialog" >Create post</my-button>
