@@ -1,7 +1,8 @@
 <template>
      <div class="post">
         <div>
-            <div>{{ postDeyerleri.id }}</div>
+            <!-- 1)  Hec bir PROPS yazmadan bir bazadan diger istenilen bazaya melumati oturmus olduq.  -->
+            <div>{{ postDeyerleri.id }} likes = {{ $store.state.likes }}</div>
             <div><strong>Title: </strong>{{ postDeyerleri.title }}</div>
             <div><strong>Body: </strong>{{ postDeyerleri.body }}</div>
         </div>

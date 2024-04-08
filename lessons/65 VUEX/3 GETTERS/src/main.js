@@ -13,7 +13,7 @@ components.forEach( component => {
 
 
 directives.forEach( directive => {
-    // console.log(directives);
+    console.log(directives);
     app.directive(directive.name, directive)
 });
 
