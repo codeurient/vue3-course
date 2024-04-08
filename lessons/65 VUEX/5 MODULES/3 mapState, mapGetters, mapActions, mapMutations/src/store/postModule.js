@@ -1,4 +1,4 @@
-import axios from "axios";  
+import axios from "axios";  // 3) AXIOS import etmemisdik.
 
 export const postModule = {
     state: () => ({
@@ -16,6 +16,7 @@ export const postModule = {
     }),
     getters: {
          sortedPosts(state) {
+            // 1) Burda seperator operatorunu yazmagi unutmusduq
             return [...state.posts].sort((post1, post2) => post1[state.selectedSort]?.localeCompare(post2[state.selectedSort]));
         },
         sortedAndSearchedPosts(state, getters) {
@@ -71,7 +72,7 @@ export const postModule = {
                     }
                 });
                 commit('setTotalPages', Math.ceil( response.headers['x-total-count'] / state.limit ) )  
-                commit('setPosts', [...state.posts, ...response.data]) 
+                commit('setPosts', [...state.posts, ...response.data])  // 2) Burda da 'this' evezine 'state' yazmaq lazim idi. 
             }catch(e){
                 console.log('error');
             } 
