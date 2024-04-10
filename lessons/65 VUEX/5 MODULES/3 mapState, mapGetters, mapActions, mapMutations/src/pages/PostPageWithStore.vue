@@ -49,6 +49,8 @@ export default {
             setSearchQuery: 'post/setSearchQuery',
             // 9)
             setSelectedSort: 'post/setSelectedSort',
+            // 10)
+            removePost: 'post/removePost',
         }),
         ...mapActions({
             loadMorePosts: 'post/loadMorePosts',
