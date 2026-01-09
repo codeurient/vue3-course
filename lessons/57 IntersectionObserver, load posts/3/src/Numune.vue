@@ -97,7 +97,7 @@ export default {
                 // 3) Ve bu koduda hemcinin:  this.isPostLoading = true;
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
                     params: {
-                         _page: this.page,
+                        _page: this.page,
                         _limit: this.limit
                     }
                 });
@@ -117,7 +117,7 @@ export default {
         };
         // 1) SELF deyiskenine THIS acar sozunu vermeden daha qisa sekilde loadMorePosts() funksiyasini cagirmaq ucun OXLU funksiyadan istifade ede bilerik.
         // 6) if(entries[0].isIntersecting && this.page < this.totalPages) - bele yazmasaq PAGE modelinin deyeri her defe POST yuklenmese bele arta-arta gede biler. 
-        const callback = (entries, observer) => {
+        const callback = (entries) => {
             if(entries[0].isIntersecting && this.page < this.totalPages){
                 this.loadMorePosts();  
             }

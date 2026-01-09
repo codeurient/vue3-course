@@ -2,7 +2,7 @@
     <div>
         <h1>Page with posts</h1>
         <!-- 
-            7) V-MODEL ile STATE-ler nece istifade edilir ? 'searchQuery' artiq STATE icinde oldugunda V-MODEL ile bir basa tesir gostere bilmerik. 
+            7) V-MODEL ile STATE-ler nece istifade edilir ? 'searchQuery' artiq STATE icinde oldugundan V-MODEL ile bir basa tesir gostere bilmerik. 
 
             Bunun ucun EVENT ve PROPS istifade etmeliyik. 'setSearchQuery' adinda MUTATION yaradiriq ve INPUT elementi @UPDATE olduqda hemin MUTATION
             STATE-in 'searchQuery' xassesinin deyerini yenileyecek. Bu elaqeni qurmaq ucun ise :model-value atributundan istifade etmisik. 

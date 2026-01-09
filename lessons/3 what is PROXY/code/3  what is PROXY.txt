@@ -1,5 +1,6 @@
 
 1. Vue JS de model deyilen bir termin vardir. Model istifadeci terefinde olan interfeys ile proqram kodu arasinda ki, elaqeni yaradan sistemdir.  
+
 2. Vue js de model icinde olan her hansisa bir data yeni melumat istifadeci interfeysine oturule biler.
 3. Istifadeci interfeysinde bas veren deyisiklikler de Vue js modellerine gonderilir.
 4. Yeni qisaca model ve interfeys arasinda qarsiliqli elaqe vardir.
@@ -30,3 +31,4 @@ Tebii ki, log bir numunedir, Proxy-inin basqa keyfiyyetleride vardir.
 
 Vue js de yazdigimiz model gonderilir hemin Proxy obyektine ve VUE JS proqramistleri bu Proxy icinde ele bir kod yazibdilar ki, hemin model
 lazim olan neticeni bize verir.
+

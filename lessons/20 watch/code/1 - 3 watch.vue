@@ -8,6 +8,8 @@
 /***
  * 
  * V-MODEL  -  direktivi Vue.js-də məlumatların ikitərəfli bir-birine bağlanmasını təmin edən xüsusi direktivdir. 
+ * 
+ * 
  * Bu, tez-tez forma elementlərinin 'input' sahələrini idarə etmək üçün istifadə olunur. Meselen, <input> teqi ilə 
  * istifadə edildikdə, V-MODEL form elementinin dəyərini, komponent icinde yazdigimiz data tipine (hal-hazirda 'name') 
  * gondermek üçün istifadə olunur. Vue.js avtomatik olaraq məlumat modelini yeniləyir yaxud əksinə; Məlumat modeli 
@@ -34,6 +36,7 @@ export default {
     },
     watch: {
         ad(newValue) {
+            
             this.xetalar = []
             
             if(newValue === ''){

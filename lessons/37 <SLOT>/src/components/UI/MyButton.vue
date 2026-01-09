@@ -1,5 +1,5 @@
 <template>
-    <button class="btn" >
+    <button class="btn"  >
         <!-- 
             1) Eger SLOT olmasa, diger fayllarin icinde BUTTON componentini cagirdiqda ona verdiyimiz ad ekrana eks olunmaz. 
             Yəni, baxmiyaraq ki, burda ad yazmisiq yenede onu gormerik: <my-button>Delete</my-button>
@@ -13,7 +13,8 @@
 </template>
     
  <script>
- export default {
+export default {
+    
 
 }
  </script>

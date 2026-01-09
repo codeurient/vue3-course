@@ -1,14 +1,6 @@
 <template>
     <div class="app">
-<!-- 
-    Post-lari dinamik sekilde elave edek. Bunun ucun INPUT tag-lerimiz var ve onlardan deyerleri elde etmeyi bacarmaliyiq. Ve duymeye EVENT teyin etmeliyik ki, basdiqda hemin deyerleri bize gondersin.
-    Bunun ucun IKI terefli elaqe qurmaq lazimdir. Istifadeci INPUT-a deyer girdikde hemin deyerler avtomatik olaraq bizim modelimize gonderilmelidir. Deyer VALUE demekdir ve JS derslerinden de bilirik ki,
-    deyerleri hemin VALUE atributunun icinden elde edirik. 
 
-    Atributa daxil edilen deyeri elde etmek ucun V-BIND direktivinden istifade edeceyik. Bu direktiv V-MODEL ile demek olarki eyni isi gorur. Ancaq:
-    1) V-MODEL - sadece form tag-inin elementleri ile istifade edilir. Bu direktiv atributlara yox bir basa tag-in icinde yazilir.
-    2) V-BIND  - html tag-lerinin istenilen atributu ucun istifade edile biler. Model icinde DEYISKENLERE girilen deyerler ATRIBUTLARA ve ATRIBUTA girilen deyerler DEYISKENLERE oturulur. Belelikle 2 terefli elaqe yaranmis olur.
--->
         <form>
             <h4>Creating post</h4>
             <input :value="title">
